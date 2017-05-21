@@ -691,7 +691,7 @@ class Config:
                                 _("Ignoring directory '{}' (unexpected name)")
                                 .format(d))
 
-        coords = coord_dict.keys()
+        coords = list(coord_dict.keys())
         res = []
         for icao in self.sortedIcao():
             airport = self.airports[icao]
@@ -919,7 +919,7 @@ configurations are kept separate.""")
         aircraftList = []
         # First sort by lowercased aircraft name
         sortFunc = lambda s: (s.lower(), s)
-        for acName in sorted(aircraftDict.keys(), key=sortFunc):
+        for acName in sorted(list(aircraftDict.keys()), key=sortFunc):
             # Then sort by position in self.aircraft_dirs
             aircraftList.extend(aircraftDict[acName])
 

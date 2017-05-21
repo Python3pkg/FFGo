@@ -502,7 +502,7 @@ class App:
 
         timeOfDayMenu = ttk.OptionMenu(self.frame312, self.translatedTimeOfDay,
                                        initTimeOfDay,
-                                       *timeOfDayReverseMapping.keys())
+                                       *list(timeOfDayReverseMapping.keys()))
         timeOfDayMenu.pack(side='top', anchor='w')
 
         # Vertical spacer
@@ -515,14 +515,14 @@ class App:
 
         seasonMenu = ttk.OptionMenu(self.frame312, self.translatedSeason,
                                     initSeason,
-                                    *seasonReverseMapping.keys())
+                                    *list(seasonReverseMapping.keys()))
         seasonMenu.pack(side='top', anchor='w')
 
         # font = tk.font.Font() # same as tk.font.nametofont("TkDefaultFont")
         # maxWidth = max(( font.measure(text) for text in
         #                  timeOfDayChoices + seasonChoices ))
         maxLen = max(( len(text) for text in itertools.chain(
-            timeOfDayReverseMapping.keys(), seasonReverseMapping.keys()) ))
+            list(timeOfDayReverseMapping.keys()), list(seasonReverseMapping.keys())) ))
         for widget in (timeOfDayMenu, seasonMenu):
             # Stupid interface that seems to work with a number of characters!
             widget.config(width=maxLen)

@@ -264,8 +264,7 @@ class GeodCalc:
         a2 = atan2(sin(l12),
                    -cosd(lat2)*tand(lat1) + sind(lat2)*cos(l12))
 
-        return tuple(map(lambda x: normAzimuth(degrees(x)),
-                         (a1, a2)))
+        return tuple([normAzimuth(degrees(x)) for x in (a1, a2)])
 
     def vincentyInverse(self, lat1, lon1, lat2, lon2, precision=1e-12):
         """Vincenty's algorithm for the geodetic inverse problem.

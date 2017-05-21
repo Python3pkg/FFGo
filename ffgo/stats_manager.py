@@ -252,7 +252,7 @@ class StatsManagerBase(metaclass=abc.ABCMeta):
                 "no top-level pair with name '{subject}'").format(
                     subject=self.subject))
 
-        for jsonKey, datesOfUse in tree.items():
+        for jsonKey, datesOfUse in list(tree.items()):
             itemId = self.jsonKeyToItemId(jsonKey)
             try:
                 # Get the Airport or Aircraft instance
@@ -320,11 +320,11 @@ class StatsManagerBase(metaclass=abc.ABCMeta):
         expiryDays = self.expiryPeriodVar.get()
         d = {}
 
-        for jsonKey, item in self.items():
+        for jsonKey, item in list(self.items()):
             self._treeToSaveMaybeAddItem(d, jsonKey, item.datesOfUse, today,
                                          expiryDays)
 
-        for jsonKey, datesOfUse in self.unusedItems.items():
+        for jsonKey, datesOfUse in list(self.unusedItems.items()):
             if jsonKey not in d:
                 self._treeToSaveMaybeAddItem(d, jsonKey, datesOfUse, today,
                                              expiryDays)
@@ -411,7 +411,7 @@ class AirportStatsManager(StatsManagerBase):
         return airport
 
     def items(self):
-        return self.config.airports.items()
+        return list(self.config.airports.items())
 
 
 class AircraftStatsManager(StatsManagerBase):

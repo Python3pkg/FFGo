@@ -923,7 +923,7 @@ class AirportFinder:
             distCalcFunc = getattr(self.geodCalc, self.calcMethodVar.get())
             airportsDict = self.config.airports
 
-            for apt in airportsDict.values():
+            for apt in list(airportsDict.values()):
                 try:
                     g = distCalcFunc(apt.lat, apt.lon,
                                      refAptLat, refAptLon)
@@ -1097,7 +1097,7 @@ class TabularDataManager:
         self.indices = []
 
         columnMapping = {}
-        for col in self.columnsMetadata.values():
+        for col in list(self.columnsMetadata.values()):
             self.configColumn(col)
             columnMapping[col.dataIndex] = col
 
@@ -1196,7 +1196,7 @@ class TabularDataManager:
     def configColumn(self, col):
         measure = self.config.treeviewHeadingFont.measure
         if col.widthText is not None:
-            width = max(map(measure, (col.widthText + "  ", col.title + "  ")))
+            width = max(list(map(measure, (col.widthText + "  ", col.title + "  "))))
         else:
             width = measure(col.title + "  ")
 

@@ -41,7 +41,7 @@ class error(Exception):
 @enum.unique
 class ParkingSource(enum.Enum):
     """Indicate where parking metadata comes from."""
-    groundnet, apt_dat = range(2)
+    groundnet, apt_dat = list(range(2))
 
 
 # cf. FGAirportDynamicsXMLLoader::startParking() in
@@ -224,14 +224,14 @@ def readGroundnetFile(xmlFilePath):
         else:
             parkings[str(p)] = p
 
-    for p in parkings.values():
+    for p in list(parkings.values()):
         if not p.type in res:
             res[p.type] = []
 
         # We have already removed the eventual duplicates
         res[p.type].append(p)
 
-    for parkList in res.values():
+    for parkList in list(res.values()):
         # Sort parking names properly (A1 < A2 < ... A9 < A10, even if the
         # number is part of the 'name' attribute). Also handles weird stuff
         # such as A10BCD9ef.12, using the integral and non-integral parts

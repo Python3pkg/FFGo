@@ -147,4 +147,4 @@ APT_DAT = join('Airports', 'apt.dat.gz')
 METAR_DAT = join('Airports', 'metar.dat.gz')
 
 
-__all__ = tuple(i for i in locals().keys() if i.isupper())
+__all__ = tuple(i for i in list(locals().keys()) if i.isupper())

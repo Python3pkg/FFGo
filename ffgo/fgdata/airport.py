@@ -93,7 +93,7 @@ class Airport:
             d[rwy.type].append(rwy.name)
 
         rl = []         # one element per runway type
-        for rwyType in sorted(d.keys(), key=lambda x: x.value):
+        for rwyType in sorted(list(d.keys()), key=lambda x: x.value):
             runwayTypeName = rwyType.capitalizedName(len(d[rwyType]))
 
             s = _("{rwyType}: {runways}").format(

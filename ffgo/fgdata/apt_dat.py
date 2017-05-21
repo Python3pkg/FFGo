@@ -757,7 +757,7 @@ class RawAirportInfoParser:
                         self._processPotentialParkingRow(
                             code, payload, parkings)
 
-        for parkList in parkings.values():
+        for parkList in list(parkings.values()):
             parkList.sort(key=parking.Parking.fullNameSortKey)
 
         return parkings
@@ -811,15 +811,15 @@ class RawAirportInfoParser:
             # Will give the coordinates of the centroid of all runway ends +
             # helipads of the airport (each runway has a sort of “double
             # weight” because of its two ends, contrary to a helipad).
-            avgLat, avgLon = map(misc.DecimalCoord,
-                                 nvecSum.scalarDiv(n).latLon())
+            avgLat, avgLon = list(map(misc.DecimalCoord,
+                                 nvecSum.scalarDiv(n).latLon()))
         else:
             avgLat, avgLon = None, None
 
         for runwayList in (landRunways, waterRunways, helipads):
             runwayList.sort(key=lambda runway: runway.name)
 
-        for parkList in parkings.values():
+        for parkList in list(parkings.values()):
             parkList.sort(key=parking.Parking.fullNameSortKey)
 
         airportIndex = (aptInfo.aptDatIndex, aptInfo.byteOffset,
@@ -876,8 +876,8 @@ class RawAirportInfoParser:
             # Will give the coordinates of the centroid of all runway ends +
             # helipads of the airport (each runway has a sort of “double
             # weight” because of its two ends, contrary to a helipad).
-            avgLat, avgLon = map(misc.DecimalCoord,
-                                 nvecSum.scalarDiv(n).latLon())
+            avgLat, avgLon = list(map(misc.DecimalCoord,
+                                 nvecSum.scalarDiv(n).latLon()))
         else:
             avgLat, avgLon = None, None
 
@@ -1369,7 +1369,7 @@ class AptDatSetManager:
             .format(nbAirports=nbAirports),
             0, nbAirports)
 
-        for i, rawAirportInfo in enumerate(airportInfoDict.values()):
+        for i, rawAirportInfo in enumerate(list(airportInfoDict.values())):
             airportIndex, airportID, airportName, airportType, airportElev, \
                 avgLat, avgLon, nbLandRunways, nbWaterRunways, nbHelipads, \
                 minRwyLength, maxRwyLength = \
@@ -1404,9 +1404,9 @@ class AptDatSetManager:
             # returning), and I think this happens when using an invalid index.
             f.write(AptDatDigest.header(
                 # Create an iterable of AptDatFileInfo instances
-                map(AptDatFileInfo._make,
-                    zip(self.aptDatList, self.aptDatSizes,
-                        aptDatUncompressedSizes, self.aptDatTimestamps))))
+                list(map(AptDatFileInfo._make,
+                    list(zip(self.aptDatList, self.aptDatSizes,
+                        aptDatUncompressedSizes, self.aptDatTimestamps))))))
 
             # Optimizing this with writelines() doesn't seem to be worth it
             # (measured with with older code, but this certainly still applies:
@@ -1613,13 +1613,13 @@ class AptDatDigest:
                     airportID = l[0]
                     name = l[1]
                     type_ = AirportType(int(l[2]))
-                    lat, lon = map(misc.DecimalCoord, l[3:5])
-                    nbLandRunways, nbWaterRunways, nbHelipads = map(
-                        int, l[5].split(';'))
+                    lat, lon = list(map(misc.DecimalCoord, l[3:5]))
+                    nbLandRunways, nbWaterRunways, nbHelipads = list(map(
+                        int, l[5].split(';')))
 
                     if l[6]:
-                        minRwyLength, maxRwyLength = map(
-                            float, l[6].split(';'))
+                        minRwyLength, maxRwyLength = list(map(
+                            float, l[6].split(';')))
                     else:
                         # The “airport” has no real runway (one can hope it has
                         # helipads!)

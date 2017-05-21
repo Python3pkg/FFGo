@@ -348,7 +348,7 @@ class IncrementalChooser(metaclass=abc.ABCMeta):
         clearButton.config(command=self.clearSearch)
 
         columnMapping = {}
-        for col in self.columnsMetadata.values():
+        for col in list(self.columnsMetadata.values()):
             self.configColumn(col)
             columnMapping[col.dataIndex] = col
 
@@ -635,7 +635,7 @@ class IncrementalChooser(metaclass=abc.ABCMeta):
         """Configure column 'col' of 'self.treeWidget'."""
         measure = self.config.treeviewHeadingFont.measure
         if col.widthText is not None:
-            width = max(map(measure, (col.widthText + "  ", col.title + "  ")))
+            width = max(list(map(measure, (col.widthText + "  ", col.title + "  "))))
         else:
             width = measure(col.title + "  ")
 
